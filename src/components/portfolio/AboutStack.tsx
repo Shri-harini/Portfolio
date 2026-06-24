@@ -9,6 +9,14 @@ import styles from "./AboutStack.module.css";
 
 gsap.registerPlugin(ScrollTrigger);
 
+const skillCategoryClass: Record<string, string> = {
+  languages: styles.skillGroupLanguages,
+  frameworks: styles.skillGroupFrameworks,
+  tools: styles.skillGroupTools,
+  cloud: styles.skillGroupCloud,
+  practices: styles.skillGroupPractices,
+};
+
 function highlightText(text: string, highlights: readonly string[]) {
   const pattern = new RegExp(
     `(${highlights.map((h) => h.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).join("|")})`,
@@ -90,7 +98,10 @@ export default function AboutStack() {
         >
           <div className={styles.skillsGrid}>
             {Object.entries(profile.skills).map(([category, items]) => (
-              <div key={category} className={styles.skillGroup}>
+              <div
+                key={category}
+                className={`${styles.skillGroup} ${skillCategoryClass[category] ?? ""}`}
+              >
                 <h3 className={styles.skillCategory}>
                   {category.replace(/([A-Z])/g, " $1").trim()}
                 </h3>
