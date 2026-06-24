@@ -376,7 +376,8 @@
   }
 
   .name {
-    font-size: clamp(2.25rem, 11vw, 3.25rem);
+    font-size: clamp(1.85rem, 8.5vw, 2.65rem);
+    letter-spacing: 0.02em;
   }
 
   .fullName {
@@ -451,7 +452,8 @@
   }
 
   .name {
-    font-size: clamp(1.95rem, 12vw, 2.65rem);
+    font-size: clamp(1.55rem, 7.5vw, 2rem);
+    letter-spacing: 0.01em;
   }
 
   .skillRow {
