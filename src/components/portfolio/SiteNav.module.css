@@ -100,5 +100,21 @@
 
   .navItem {
     padding: 0.4rem 0.65rem;
+    min-height: 44px;
+  }
+
+  .scrollTopBtn {
+    width: 38px;
+    height: 38px;
+  }
+}
+
+@media (max-width: 768px) {
+  .siteNav {
+    padding-inline: 0.65rem;
+  }
+
+  .navItems {
+    gap: 0.2rem;
   }
 }

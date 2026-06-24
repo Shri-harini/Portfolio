@@ -11,8 +11,15 @@ const CinematicLayer = dynamic(() => import("./CinematicLayer"), {
   ssr: false,
 });
 
-const VIDEO_SRC = "/videos/hero-background.mp4";
+const DESKTOP_VIDEO = "/videos/hero-background.mp4";
+const MOBILE_VIDEO = "/videos/portfolio_welcome_video.mp4";
+const MOBILE_BREAKPOINT = 768;
 const SOUND_HINT_DELAY_MS = 4500;
+
+function pickVideoSrc() {
+  if (typeof window === "undefined") return DESKTOP_VIDEO;
+  return window.innerWidth <= MOBILE_BREAKPOINT ? MOBILE_VIDEO : DESKTOP_VIDEO;
+}
 
 export interface VideoIntroProps {
   nextSectionId?: string;
@@ -30,13 +37,21 @@ export default function VideoIntro({
   const userMutedRef = useRef(false);
 
   const [mounted, setMounted] = useState(false);
+  const [videoSrc, setVideoSrc] = useState(DESKTOP_VIDEO);
   const [isPlaying, setIsPlaying] = useState(true);
   const [isMuted, setIsMuted] = useState(false);
   const [showHint, setShowHint] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
 
   useEffect(() => {
+    setVideoSrc(pickVideoSrc());
     setMounted(true);
+
+    const mq = window.matchMedia(`(max-width: ${MOBILE_BREAKPOINT}px)`);
+    const onViewportChange = () => setVideoSrc(pickVideoSrc());
+    mq.addEventListener("change", onViewportChange);
+
+    return () => mq.removeEventListener("change", onViewportChange);
   }, []);
 
   const syncVideos = useCallback(() => {
@@ -192,7 +207,7 @@ export default function VideoIntro({
   const hasAnimatedRef = useRef(false);
 
   useEffect(() => {
-    if (!mounted) return;
+    if (!mounted || !videoSrc) return;
 
     const fg = foregroundRef.current;
     const bg = backgroundRef.current;
@@ -201,6 +216,11 @@ export default function VideoIntro({
     let cancelled = false;
 
     const init = async () => {
+      fg.src = videoSrc;
+      bg.src = videoSrc;
+      fg.load();
+      bg.load();
+
       await startPlayback();
       if (cancelled) return;
     };
@@ -226,7 +246,7 @@ export default function VideoIntro({
       fg.pause();
       bg.pause();
     };
-  }, [mounted, syncVideos, handleVideoEnded, startPlayback]);
+  }, [mounted, videoSrc, syncVideos, handleVideoEnded, startPlayback]);
 
   useEffect(() => {
     if (!mounted) return;
@@ -311,7 +331,7 @@ export default function VideoIntro({
             <video
               ref={backgroundRef}
               className={styles.videoBackground}
-              src={VIDEO_SRC}
+              src={videoSrc}
               muted
               playsInline
               preload="auto"
@@ -321,7 +341,7 @@ export default function VideoIntro({
             <video
               ref={foregroundRef}
               className={styles.videoForeground}
-              src={VIDEO_SRC}
+              src={videoSrc}
               playsInline
               preload="auto"
               tabIndex={-1}
