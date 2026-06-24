@@ -1,14 +1,17 @@
 .card {
+  --nav-height: 56px;
+  --box-height: min(680px, calc(100svh - var(--nav-height) - 2rem));
   position: relative;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
   min-height: 100svh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
-  scroll-margin-top: var(--nav-height, 56px);
-  padding: calc(var(--nav-height, 56px) + 0.65rem) clamp(1.25rem, 4vw, 2.5rem) 2rem;
+  scroll-margin-top: var(--nav-height);
+  padding: calc(var(--nav-height) + 0rem) clamp(1.25rem, 4vw, 2.5rem) 1rem;
 }
 
 .cardInner {
@@ -16,11 +19,13 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  width: 100%;
-  max-width: 1100px;
-  min-height: auto;
-  max-height: calc(100svh - var(--nav-height, 56px) - 1.25rem);
-  padding: clamp(1.75rem, 4vw, 2.75rem) clamp(2rem, 5vw, 3.25rem);
+  width: min(100%, 1100px);
+  height: var(--box-height);
+  min-height: var(--box-height);
+  max-height: var(--box-height);
+  margin-inline: auto;
+  flex-shrink: 0;
+  padding: clamp(1.5rem, 3vw, 2.25rem) clamp(1.75rem, 4vw, 2.75rem);
   border: 1px solid rgba(232, 132, 42, 0.2);
   border-radius: 28px;
   background: linear-gradient(
@@ -31,8 +36,8 @@
   box-shadow:
     0 24px 80px rgba(0, 0, 0, 0.5),
     inset 0 1px 0 rgba(255, 255, 255, 0.04);
-  overflow-y: auto;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .cardInner::before {
@@ -52,7 +57,7 @@
   align-items: flex-start;
   justify-content: space-between;
   gap: 1rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
 }
 
 .breadcrumb {
@@ -74,7 +79,7 @@
 }
 
 .title {
-  margin: 0 0 2rem;
+  margin: 0 0 1.35rem;
   font-family: var(--font-display), system-ui, sans-serif;
   font-size: clamp(2.5rem, 6vw, 4rem);
   font-weight: 800;
@@ -98,12 +103,12 @@
 
 @media (max-width: 768px) {
   .card {
+    justify-content: flex-start;
     padding-top: calc(var(--nav-height, 56px) + 0.5rem);
   }
 
   .cardInner {
-    max-height: calc(100svh - var(--nav-height, 56px) - 1rem);
-    padding: 1.5rem 1.25rem;
+    padding: 1.25rem 1.15rem;
   }
 }
 

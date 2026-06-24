@@ -2,11 +2,14 @@
   --nav-height: 56px;
   position: relative;
   z-index: 2;
+  width: 100%;
   background: #050505;
+  overflow-x: clip;
 }
 
 .stack {
   width: 100%;
+  max-width: 100%;
 }
 
 .paragraph {
@@ -41,7 +44,7 @@
 
 .skillsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1.25rem;
 }
 
@@ -312,9 +315,19 @@ a.contactLink:hover {
   color: rgba(255, 255, 255, 0.65);
 }
 
+@media (max-width: 1024px) {
+  .skillsGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .statsGrid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .skillsGrid {
+    grid-template-columns: 1fr;
   }
 }
 

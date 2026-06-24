@@ -2,7 +2,6 @@
   position: relative;
   z-index: 1;
   width: 100%;
-  max-width: 100vw;
   min-height: 100svh;
   scroll-snap-align: start;
   scroll-snap-stop: always;
